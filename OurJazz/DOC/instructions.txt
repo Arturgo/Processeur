@@ -27,5 +27,10 @@ op_codes :
 1001 : mul
 0101 : jiz
 1101 : jnz
+0011 : jl
+1011 : jle
+0111 : jg
+1111 : jge
+
 
 To just jump, you can just move RIP (register 0)
