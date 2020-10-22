@@ -18,7 +18,7 @@ const size_t nb_registers = (1 << reg_addr_size);
 
 const size_t instr_size = 4 * word_size;
 
-const size_t real_opcode_size = 4;
+const size_t real_opcode_size = 5;
 const size_t opcode_size = 16;
 const size_t param_size = 16;
 const size_t lhs_size = 32;
@@ -223,6 +223,18 @@ int main() {
    
    // JNZ gate
    gate_outputs.push_back(mux(incRip, rhs, op_not(is_lhs_zero)));
+   
+   // JL gate
+   gate_outputs.push_back(mux(incRip, rhs, lhs[word_size - 1]));
+   
+   // JLE gate
+   gate_outputs.push_back(mux(incRip, rhs, op_or(lhs[word_size - 1], is_lhs_zero)));
+   
+   // JG gate
+   gate_outputs.push_back(mux(rhs, incRip, op_or(lhs[word_size - 1], is_lhs_zero)));
+   
+   // JGE gate
+   gate_outputs.push_back(mux(rhs, incRip, lhs[word_size - 1]));
    
    while(gate_outputs.size() < (1 << real_opcode_size)) {
       gate_outputs.push_back(vector<string>(word_size, "0"));
