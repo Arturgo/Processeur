@@ -313,7 +313,9 @@ public:
    }
    
    string code() {
-      string c = "#include <iostream>\n";
+      string c = "#ifndef PROC_H\n";
+      c += "#define PROC_H\n";
+      c += "#include <iostream>\n";
       c += "#include <bitset>\n";
       c += "#include <fstream>\n";
       c += "#include <vector>\n";
@@ -321,7 +323,7 @@ public:
       
       opt();
       
-      /* init variables and functions */
+      //Netlist Nodes
       for(size_t node = 0;node < node_list.size();node++) {
          if(node_list[node]->opt(node_list.begin()) == node) {
             c += node_list[node]->init();
@@ -339,16 +341,13 @@ public:
             c += node->code();
       }
       
-      c += "int main(int argc, char* argv[]) {\n";
-      c += "ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);\n";
-      c += "size_t nbTicks = stoull(argv[1]);\n";
-      c += "val_0 = 0; val_1 = 1;\n";
-      c += "char c;\n";
+      //RAM initialization
       
+      c += "void init_ram() {\n";
       c += "string file;\n";
       c += "ifstream fin;\n";
+      c += "char c;\n";
       c += "size_t pos = 0;\n";
-      
       for(string ram : rams) {
          c += "cerr << \"Please indicate a file to init ram " + ram + ":\" << endl;\n;";
          c += "cin >> file;\n";
@@ -366,8 +365,28 @@ public:
          c += "}\n";
          c += "fin.close();\n";
       }
+      c += "}\n";
       
-      c += "while(curTick < nbTicks) {\n";
+      if(rams.size() == 1) {
+         c += "size_t get_ram(size_t pos) {\n";
+         string ram = rams.back();
+         c += "bitset<" + to_string(sizes[ram]) + "> x;\n";
+         c += "bitset<128> mask((((size_t)1) << 32) - 1);\n";
+         
+         for(size_t i = 0;i < sizes[ram];i++) {
+            c += "x[" + to_string(i) + "] = " + mem(codes[ram] + i) + "[pos >> 2];\n";
+         }
+
+         c += "return ((x >> (32 * (pos % 4))) & mask).to_ulong();\n";
+         c += "}\n";
+      }
+      
+      //Tick function
+      c += "void tick() {\n";
+      c += "val_0 = 0; val_1 = 1;\n";
+      c += "char c;\n";
+      c += "size_t pos = 0;\n";
+      
       c += "curTick++;\n";
       
       for(string input : inputs) {
@@ -400,7 +419,7 @@ public:
          Mem* repr = (Mem*)node_list[id];
          
          c += "if(" + f(repr->parents[repr->adsz]) + ") {\n"
-         + "size_t pos = 0;\n";
+         + "pos = 0;\n";
          for(size_t i = 0;i < repr->adsz;i++) {
             c += "if(" + f(repr->parents[i + repr->adsz + 1]) + ") pos |= " + to_string(1 << i) + ";\n";
          }
@@ -417,28 +436,7 @@ public:
 
       c += "}\n";
       
-      c += "#ifdef DEBUG_RAM\n";
-      
-      for(string ram : rams) {
-         c += "size_t nb = 0;\n";
-         c += "cerr << \"Number of words to print for ram " + ram + ":\" << endl;\n;";
-         c += "cin >> nb;\n";
-         
-         c += "for(size_t i = 0;i < nb;i++) {\n";
-         for(size_t j = 0;j < 4;j++) {
-            c += "bitset<" + to_string(sizes[ram]) + "> x_" + to_string(j) + ";\n";
-            for(size_t i = 0;i < 32;i++) {
-               c += "x_" + to_string(j) + "[" + to_string(i) + "] = " + mem(codes[ram] + 32 * j + i) + "[i];\n";
-            }
-            c += "cerr << 4 * i + " + to_string(j) +" << \": \" << x_" + to_string(j) + ".to_ulong() << endl;\n";
-         }
-         c += "}\n";
-      }
-      
       c += "#endif\n";
-      
-      c += "return 0;\n";
-      c += "}\n";
       
       return c;
    }
