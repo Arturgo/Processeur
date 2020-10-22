@@ -15,22 +15,22 @@ addrReg (4 bits)
 Rien (4 bits)
 
 op_codes :
-0000 : mov
-1000 : inc
-0100 : add
-1100 : not
-0010 : neg
-1010 : sub
-0110 : xor
-1110 : or
-0001 : and
-1001 : mul
-0101 : jiz
-1101 : jnz
-0011 : jl
-1011 : jle
-0111 : jg
-1111 : jge
+00000 : mov
+10000 : inc
+01000 : add
+11000 : not
+00100 : neg
+10100 : sub
+01100 : xor
+11100 : or
+00010 : and
+10010 : mul
+01010 : jiz
+11010 : jnz
+00110 : jl
+10110 : jle
+01110 : jg
+11110 : jge
 
 
 To just jump, you can just move RIP (register 0)
