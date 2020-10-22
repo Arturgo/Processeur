@@ -7,7 +7,7 @@ wReg
 aCst
 bCst
 addrIsReg
-Rien (11 bits)
+Rien (9 bits)
 a (32 bits)
 b (32 bits)
 addr (24 bits)
