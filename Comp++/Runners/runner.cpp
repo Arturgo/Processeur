@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
             window.close();
       }
       
-      for(size_t iTick = 0;iTick < 50;iTick++) {
+      for(size_t iTick = 0;iTick < 1000;iTick++) {
          tick();
       }
       
@@ -37,17 +37,14 @@ int main(int argc, char* argv[]) {
       size_t addr_begin = 0;
       for(size_t iX = 0;iX < SCREEN_X;iX++) {
          for(size_t iY = 0;iY < SCREEN_Y;iY++) {
-            if(get_ram(iX + iY * SCREEN_X) != 0) {
-               RectangleShape pixel(Vector2f(SIZE_X, SIZE_Y));
-               pixel.setPosition(iX * SIZE_X, iY * SIZE_Y);
-               window.draw(pixel);
-            }
+            RectangleShape pixel(Vector2f(SIZE_X, SIZE_Y));
+            pixel.setFillColor(Color(get_ram(iX + iY * SCREEN_X)));
+            pixel.setPosition(iX * SIZE_X, iY * SIZE_Y);
+            window.draw(pixel);
          }
       }
       
       window.display();
-      
-      sleep(milliseconds(50));
    }
    
    return 0;
