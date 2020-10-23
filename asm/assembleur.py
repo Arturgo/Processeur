@@ -1,10 +1,4 @@
-with open("test.in") as f:
-    L=list(f.readlines())
+with open("test.py") as f:
+    t=f.read()
 
-ligne=0
-
-for i in range(len(L)):
-    command=L[i]
-    if command=="\n":
-        continue
-    ligne+=1
+exec("from asm import *\n"+t+"\nfichier.close()")

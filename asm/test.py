@@ -1,8 +1,4 @@
-from asm import *
-
-mov(15,r8)
-inc(r8)
-inc(addr(20))
-inc(addr(r8))
-
-fichier.close()
+A=Label()
+Inc(r8)
+Mov(1,addr(r8))
+Jmp(A)

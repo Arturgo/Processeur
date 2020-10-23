@@ -1,3 +1,4 @@
+import sys
 class registre:
     def __init__(self, n):
         self.n=n
@@ -6,9 +7,13 @@ class addr:
         self.n=n
 for i,el in enumerate(("rip", "rax","rbx","rcx","rdx","rsi","rdi","rbp","rsp","r8","r9","r10","r11","r12","r13","r14")):
     exec(el+"=registre({})".format(i))
-fichier=open('../OurJazz/Tests/gen.data','w')
+fichier=sys.stdout
+#fichier=open('../OurJazz/Tests/gen.data','w')
+
+ligne=0
 
 def code(op_code,a,b,c):
+    global ligne
     adresse=0
     if isinstance(a,registre):
         aRam=0
@@ -71,10 +76,29 @@ def code(op_code,a,b,c):
     adresse=Bin(adresse)
     addrReg=Bin(addrReg)
     #print(op_code, aRam,bRam,wRam,wReg,aCst,bCst,addrIsReg,0,a,b,adresse,addrReg)
-    print( "{:0<16}{}{}{}{}{}{}{}{:0<9}{:0<32}{:0<32}{:0<24}{:0<4}{:0<4}".format(
+    print("{:0<16}{}{}{}{}{}{}{}{:0<9}{:0<32}{:0<32}{:0<24}{:0<4}{:0<4}".format(
         op_code, aRam,bRam,wRam,wReg,aCst,bCst,addrIsReg,0,a,b,adresse,addrReg,0),file=fichier)
-    print(aRam)
-def mov(a,b):
-    code(0,a,0,b)
-def inc(a):
-    code(1,a,0,a)
+    ligne+=4
+    #print(aRam)
+
+for i,(el,nb) in enumerate((["Mov", 2],["Inc",1],["Add", 3],
+                           ["Not",2],["Neg", 2],["Sub", 3],
+                           ["Xor",3],["Or", 3],["And",3],
+                           ["Mul",3],["Jiz",3],["Jnz",3],["Jl",3],
+                           ["Jle",3],["Jg",3],["Jge",3])):
+    if nb==1:
+        exec("""
+def {}(a):
+    code({},a,0,a)""".format(el,i))
+    if nb==2:
+        exec("""
+def {}(a,b):
+    code({},a,0,b)""".format(el,i))
+    if nb==3:
+        exec("""
+def {}(a,b,c):
+    code({},a,b,c)""".format(el,i))
+def Jmp(nb):
+    code(0,nb,0,rip)
+def Label():
+    return ligne
