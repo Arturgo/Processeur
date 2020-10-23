@@ -282,9 +282,9 @@ int main() {
    
    
    //decl_output(concat(ret));
-   decl_output(concat(reg_outputs[0]));
-   decl_output(ram_output);
-   decl_output(concat(reg_outputs[1]));
+   //decl_output(concat(reg_outputs[0]));
+   //decl_output(ram_output);
+   //decl_output(concat(reg_outputs[1]));
    
    // Write netlist to stdout
    write();
