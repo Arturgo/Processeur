@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
             window.close();
       }
       
-      for(size_t iTick = 0;iTick < 1000;iTick++) {
+      for(size_t iTick = 0;iTick < 5000;iTick++) {
          tick();
       }
       
