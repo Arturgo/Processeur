@@ -48,12 +48,15 @@ public:
    size_t derTick = 0;
    size_t nbUses = 0;
    
+   size_t seed;
+   
    size_t id;
    vector<Node*> parents;
    
    /* How calculation are dynamised */
    Node(size_t _id) {
       id = _id;
+      seed = rand();
    }
    
    virtual string just_op() { return ""; };
@@ -105,7 +108,11 @@ public:
 
 class Const : public Node {
 public:
-   string just_op() { return val(id); }
+   string just_op() { 
+      if(id == 0) return "0";
+      if(id == 1) return "1";
+      return val(id); 
+   }
    string vars() { return "bool " + val(id) + " = 0;\n"; }
    string code() { return ""; }
    string call() { return just_op(); }
