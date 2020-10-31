@@ -1,5 +1,7 @@
+import sys
+
 r="from asm import *\n"
-with open("test.py") as f:
+with open(sys.argv[1]) as f:
     t=list(f.readlines())
 for el in t:
     r+="""try:
