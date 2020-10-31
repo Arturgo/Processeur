@@ -1,4 +1,14 @@
+r="from asm import *\n"
 with open("test.py") as f:
-    t=f.read()
-
-exec("from asm import *\n"+t+"\nfichier.close()")
+    t=list(f.readlines())
+for el in t:
+    r+="""try:
+    {}
+except NameError:
+    None
+""".format(el)
+r+="\nInit()\n"
+r+=''.join(t)
+r+="\nInit()\n"
+r+=''.join(t)
+exec(r)

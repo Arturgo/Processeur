@@ -7,13 +7,14 @@ class addr:
         self.n=n
 for i,el in enumerate(("rip", "rax","rbx","rcx","rdx","rsi","rdi","rbp","rsp","r8","r9","r10","r11","r12","r13","r14")):
     exec(el+"=registre({})".format(i))
-fichier=sys.stdout
+#fichier=sys.stdout
 #fichier=open('../OurJazz/Tests/gen.data','w')
 
 ligne=0
-
+premierPasse=True
 def code(op_code,a,b,c):
     global ligne
+    ligne+=4
     adresse=0
     if isinstance(a,registre):
         aRam=0
@@ -77,8 +78,7 @@ def code(op_code,a,b,c):
     addrReg=Bin(addrReg)
     #print(op_code, aRam,bRam,wRam,wReg,aCst,bCst,addrIsReg,0,a,b,adresse,addrReg)
     print("{:0<16}{}{}{}{}{}{}{}{:0<9}{:0<32}{:0<32}{:0<24}{:0<4}{:0<4}".format(
-        op_code, aRam,bRam,wRam,wReg,aCst,bCst,addrIsReg,0,a,b,adresse,addrReg,0),file=fichier)
-    ligne+=4
+        op_code, aRam,bRam,wRam,wReg,aCst,bCst,addrIsReg,0,a,b,adresse,addrReg,0))
     #print(aRam)
 
 for i,(el,nb) in enumerate((["Mov", 2],["Inc",1],["Add", 3],
@@ -99,6 +99,10 @@ def {}(a,b):
 def {}(a,b,c):
     code({},a,b,c)""".format(el,i))
 def Jmp(nb):
+    #print(nb)
     code(0,nb,0,rip)
 def Label():
     return ligne
+def Init():
+    global ligne
+    ligne=0
