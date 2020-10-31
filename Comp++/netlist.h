@@ -412,8 +412,9 @@ public:
       c += "}\n";
       
       if(rams.size() == 1) {
-         c += "size_t get_ram(size_t pos) {\n";
          string ram = rams.back();
+         
+         c += "size_t get_ram(size_t pos) {\n";
          c += "bitset<" + to_string(sizes[ram]) + "> x;\n";
          c += "bitset<128> mask((((size_t)1) << 32) - 1);\n";
          
@@ -422,6 +423,23 @@ public:
          }
 
          c += "return ((x >> (32 * (pos % 4))) & mask).to_ulong();\n";
+         c += "}\n";
+         
+         c += "void set_ram(size_t pos, size_t val) {\n";
+         c += "bitset<" + to_string(sizes[ram]) + "> x;\n";
+         c += "bitset<" + to_string(sizes[ram]) + "> y(val);\n";
+         c += "bitset<128> mask((((size_t)1) << 32) - 1);\n";
+         
+         for(size_t i = 0;i < sizes[ram];i++) {
+            c += "x[" + to_string(i) + "] = " + mem(codes[ram] + i) + "[pos >> 2];\n";
+         }
+         
+         c += "x = (x & ~(mask << (32 * (pos % 4)))) | (y << (32 * (pos % 4)));\n";
+         
+         for(size_t i = 0;i < sizes[ram];i++) {
+            c += mem(codes[ram] + i) + "[pos >> 2] = x[" + to_string(i) + "];\n";
+         }
+         
          c += "}\n";
       }
       

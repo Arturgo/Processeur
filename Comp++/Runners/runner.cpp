@@ -24,12 +24,16 @@ int main(int argc, char* argv[]) {
    size_t derValue = 0;
    size_t addr_begin = (1 << 23);
    size_t addr_update = addr_begin + SCREEN_X * SCREEN_Y;
+   size_t addr_keyboard = addr_update + 1;
    
    while(window.isOpen()) {
       sf::Event event;
       while(window.pollEvent(event)) {
          if(event.type == sf::Event::Closed)
             window.close();
+         if(event.type == sf::Event::KeyPressed) {
+            set_ram(addr_keyboard, event.key.code);
+         }
       }
       
       for(size_t iFois = 0;iFois < 100;iFois++) {
