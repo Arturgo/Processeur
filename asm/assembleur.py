@@ -9,6 +9,6 @@ except NameError:
 """.format(el)
 r+="\nInit()\n"
 r+=''.join(t)
-r+="\nInit()\n"
+r+="\nEcrire()\n"
 r+=''.join(t)
 exec(r)
