@@ -1,7 +1,0 @@
-mov(a,b)
-mov(a,addr(b))
-
-label(machin)
-
-add(a,b,1)
-
