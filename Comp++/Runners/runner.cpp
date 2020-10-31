@@ -21,6 +21,10 @@ int main(int argc, char* argv[]) {
    
    sf::RenderWindow window(sf::VideoMode(REAL_X, REAL_Y), "SCREEN");
    
+   size_t derValue = 0;
+   size_t addr_begin = (1 << 23);
+   size_t addr_update = addr_begin + SCREEN_X * SCREEN_Y;
+   
    while(window.isOpen()) {
       sf::Event event;
       while(window.pollEvent(event)) {
@@ -28,23 +32,27 @@ int main(int argc, char* argv[]) {
             window.close();
       }
       
-      for(size_t iTick = 0;iTick < 5000;iTick++) {
+      for(size_t iFois = 0;iFois < 100;iFois++) {
          tick();
       }
       
-      window.clear();
-      
-      size_t addr_begin = (1 << 23);
-      for(size_t iX = 0;iX < SCREEN_X;iX++) {
-         for(size_t iY = 0;iY < SCREEN_Y;iY++) {
-            RectangleShape pixel(Vector2f(SIZE_X, SIZE_Y));
-            pixel.setFillColor(Color(get_ram(addr_begin + iX + iY * SCREEN_X)));
-            pixel.setPosition(iX * SIZE_X, iY * SIZE_Y);
-            window.draw(pixel);
+      size_t curValue = get_ram(addr_update);
+      if(derValue != curValue) {
+         window.clear();
+         
+         for(size_t iX = 0;iX < SCREEN_X;iX++) {
+            for(size_t iY = 0;iY < SCREEN_Y;iY++) {
+               RectangleShape pixel(Vector2f(SIZE_X, SIZE_Y));
+               pixel.setFillColor(Color(get_ram(addr_begin + iX + iY * SCREEN_X)));
+               pixel.setPosition(iX * SIZE_X, iY * SIZE_Y);
+               window.draw(pixel);
+            }
          }
+         
+         window.display();
+         
+         derValue = curValue;
       }
-      
-      window.display();
    }
    
    return 0;

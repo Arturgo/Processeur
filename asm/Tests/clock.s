@@ -1,24 +1,41 @@
 white = (2 ** 32) - 1
+grey = 0b10111111101111111011111111111111
 black = 0
 screen = (2 ** 23)
 screen_width = 64
+screen_height = 48
+screen_update = screen + screen_width * screen_height
 stack = screen - 1
 
-digit_size = 28
+digit_size = 40
 
 # Move stack pointer
 Mov(stack, rsp)
 
+# Init everything in white
+
+Mov(screen, rax)
+Add(screen, screen_width * screen_height, rbx)
+
+Erase = Label()
+
+Mov(white, addr(rax))
+Add(rax, 1, rax)
+
+Sub(rbx, rax, r8)
+
+Jnz(r8, Erase, rip)
 
 
+Mov(0, rsi)
+Mov(0, rdi)
 
+# Main loop 
+Main = Label()
 
-
-# Main loop
-
-Mov(0, rax)
+Mov(rsi, rax)
 Mov(20, rbx)
-Mov(30, rcx)
+Mov(32, rcx)
 
 # Call WriteDigit
 Mov(RetAddr0, addr(rsp))
@@ -26,10 +43,33 @@ Sub(rsp, 1, rsp)
 Jmp(WriteDigit)
 RetAddr0 = Label()
 
-Main = Label()
+Mov(rdi, rax)
+Mov(20, rbx)
+Mov(25, rcx)
+
+# Call WriteDigit
+Mov(RetAddr1, addr(rsp))
+Sub(rsp, 1, rsp)
+Jmp(WriteDigit)
+RetAddr1 = Label()
+
+# Update screen
+Add(addr(screen_update), 1, addr(screen_update))
+
+Add(1, rsi, rsi)
+
+Sub(rsi, 10, r10)
+Jnz(r10, NormalRSI, rip)
+Mov(0, rsi)
+Add(1, rdi, rdi)
+NormalRSI = Label()
+
+Sub(rdi, 10, r10)
+Jnz(r10, NormalRDI, rip)
+Mov(0, rdi)
+NormalRDI = Label()
+
 Jmp(Main)
-
-
 
 
 
@@ -42,8 +82,8 @@ Jmp(Main)
 WriteDigit = Label()
 
 # Compute where to stop
-Add(rbx, 7, r10)
-Add(rcx, 4, r11)
+Add(rbx, 8, r10)
+Add(rcx, 5, r11)
 Mov(rcx, r9)
 
 # Compute addr of digit
@@ -89,45 +129,583 @@ Jmp(addr(rsp))
 
 Digits = Label()
 
-# .@@.
-# @..@
-# @..@
-# @..@
-# @..@
-# @..@
-# .@@.
-
-Data(black)
-Data(white)
-Data(white)
-Data(black)
+# 00. 
+#0  0.
+#0  0.
+#0  0.
+#0  0.
+#0  0.
+#.00. 
+# ..  
 
 Data(white)
 Data(black)
 Data(black)
-Data(white)
-
-Data(white)
-Data(black)
-Data(black)
-Data(white)
-
-Data(white)
-Data(black)
-Data(black)
-Data(white)
-
-Data(white)
-Data(black)
-Data(black)
-Data(white)
-
-Data(white)
-Data(black)
-Data(black)
+Data(grey)
 Data(white)
 
 Data(black)
 Data(white)
 Data(white)
 Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(grey)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(grey)
+Data(grey)
+Data(white)
+Data(white)
+
+
+#  0. 
+# 00. 
+#0 0. 
+#  0. 
+#  0. 
+#  0. 
+# 000.
+# ... 
+
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(black)
+Data(black)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(grey)
+Data(grey)
+Data(grey)
+Data(white)
+
+
+# 00. 
+#0  0.
+#   0.
+#  0. 
+# 0.  
+#0.   
+#0000.
+#.... 
+
+Data(white)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+Data(white)
+
+Data(black)
+Data(grey)
+Data(white)
+Data(white)
+Data(white)
+
+Data(black)
+Data(black)
+Data(black)
+Data(black)
+Data(grey)
+
+Data(grey)
+Data(grey)
+Data(grey)
+Data(grey)
+Data(white)
+
+
+# 00. 
+#0  0.
+#   0.
+# 00. 
+#   0.
+#0  0.
+#.00. 
+# ..  
+
+Data(white)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(grey)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(grey)
+Data(grey)
+Data(white)
+Data(white)
+
+
+#0  0.
+#0  0.
+#0  0.
+#.000.
+# ..0.
+#   0.
+#   0.
+#   . 
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(grey)
+Data(black)
+Data(black)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(grey)
+Data(grey)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(grey)
+Data(white)
+
+
+#0000.
+#0... 
+#000. 
+#   0.
+#   0.
+#0  0.
+#.00. 
+# ..  
+
+Data(black)
+Data(black)
+Data(black)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(grey)
+Data(grey)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(grey)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(grey)
+Data(grey)
+Data(white)
+Data(white)
+
+
+# 00. 
+#0  0.
+#0  . 
+#000. 
+#0  0.
+#0  0.
+#.00. 
+# ..  
+
+Data(white)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(grey)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(grey)
+Data(grey)
+Data(white)
+Data(white)
+
+
+#0000.
+#   0.
+#   0.
+#  0. 
+#  0. 
+# 0.  
+# 0.  
+# .   
+
+Data(black)
+Data(black)
+Data(black)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+Data(white)
+
+Data(white)
+Data(black)
+Data(grey)
+Data(white)
+Data(white)
+
+Data(white)
+Data(grey)
+Data(white)
+Data(white)
+Data(white)
+
+
+# 00. 
+#0  0.
+#0  0.
+# 00. 
+#0  0.
+#0  0.
+#.00. 
+# ..  
+
+Data(white)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(grey)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(grey)
+Data(grey)
+Data(white)
+Data(white)
+
+
+# 00. 
+#0  0.
+#0  0.
+# 000.
+#   0.
+#0  0.
+#.00. 
+# ..  
+
+Data(white)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(black)
+Data(black)
+Data(black)
+Data(grey)
+
+Data(white)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(black)
+Data(white)
+Data(white)
+Data(black)
+Data(grey)
+
+Data(grey)
+Data(black)
+Data(black)
+Data(grey)
+Data(white)
+
+Data(white)
+Data(grey)
+Data(grey)
+Data(white)
+Data(white)
+
+
