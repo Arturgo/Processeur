@@ -4,7 +4,7 @@ screen = (2 ** 23)
 screen_width = 64
 stack = screen - 1
 
-digit_size = 25
+digit_size = 28
 
 # Move stack pointer
 Mov(stack, rsp)
@@ -15,7 +15,10 @@ Mov(stack, rsp)
 
 
 # Main loop
-Main = Label()
+
+Mov(0, rax)
+Mov(20, rbx)
+Mov(30, rcx)
 
 # Call WriteDigit
 Mov(RetAddr0, addr(rsp))
@@ -23,6 +26,7 @@ Sub(rsp, 1, rsp)
 Jmp(WriteDigit)
 RetAddr0 = Label()
 
+Main = Label()
 Jmp(Main)
 
 
@@ -38,24 +42,31 @@ Jmp(Main)
 WriteDigit = Label()
 
 # Compute where to stop
-Add(rbx, 5, r10)
-Add(rcx, 5, r11)
+Add(rbx, 7, r10)
+Add(rcx, 4, r11)
+Mov(rcx, r9)
 
 # Compute addr of digit
-
-
-# Loop to print
-Boucle = Label()
 Mul(rax, digit_size, rax)
 Add(Digits, rax, rax)
 
+# Loop to print
+Boucle = Label()
+
+# Compute addr to print
+Mul(rbx, 64, r8)
+Add(r8, screen, r8)
+Add(r8, r9, r8)
+
+Mov(addr(rax), rdx)
+Mov(rdx, addr(r8))
 
 #Inc col
 Add(r9, 1, r9)
 Add(rax, 1, rax)
 
 #Col comparison
-Sub(r9, rcx, r13)
+Sub(r9, r11, r13)
 Jnz(r13, Normal, rip)
 Mov(rcx, r9)
 Add(rbx, 1, rbx)
@@ -78,26 +89,20 @@ Jmp(addr(rsp))
 
 Digits = Label()
 
-# .@@@.
-# @...@
-# @...@
-# @...@
-# .@@@.
+# .@@.
+# @..@
+# @..@
+# @..@
+# @..@
+# @..@
+# .@@.
 
 Data(black)
 Data(white)
 Data(white)
-Data(white)
 Data(black)
 
 Data(white)
-Data(black)
-Data(black)
-Data(black)
-Data(white)
-
-Data(white)
-Data(black)
 Data(black)
 Data(black)
 Data(white)
@@ -105,11 +110,24 @@ Data(white)
 Data(white)
 Data(black)
 Data(black)
+Data(white)
+
+Data(white)
+Data(black)
+Data(black)
+Data(white)
+
+Data(white)
+Data(black)
+Data(black)
+Data(white)
+
+Data(white)
+Data(black)
 Data(black)
 Data(white)
 
 Data(black)
-Data(white)
 Data(white)
 Data(white)
 Data(black)
