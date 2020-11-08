@@ -99,7 +99,7 @@ RetAddr4 = Label()
 
 Div(rdi, 10, rax)
 Mov(20, rbx)
-Mov(32 - 21, rcx)
+Mov(32 - 22, rcx)
 
 # Call WriteDigit
 Mov(RetAddr5, addr(rsp))
