@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 string prog;
@@ -269,6 +270,34 @@ vector<string> mul_bits(vector<string> a, vector<string> b) {
    }
    
    return res;
+}
+
+pair<vector<string>, vector<string>> div_bits(vector<string> a, vector<string> b) {
+   vector<string> remainder = a;
+   
+   for(size_t iBit = 0;iBit < a.size();iBit++) {
+      remainder.push_back("0");
+      b.push_back("0");
+   }
+   
+   vector<string> res;
+   
+   for(int iBit = (int)a.size() - 1;iBit >= 0;iBit--) {
+      vector<string> dec = mul_p2_bits(b, iBit);
+      
+      vector<string> diff = sub_bits(remainder, dec);
+      
+      string tooBig = diff.back();
+      
+      remainder = mux(diff, remainder, tooBig);
+      res.push_back(op_not(tooBig));
+   }
+   
+   reverse(res.begin(), res.end());
+   
+   for(size_t iBit = 0;iBit < a.size();iBit++) remainder.pop_back();
+   
+   return make_pair(res, remainder);
 }
 
 string is_zero(vector<string> a) {

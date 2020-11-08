@@ -93,7 +93,7 @@ for i,(el,nb) in enumerate((["Mov", 2],["Inc",1],["Add", 3],
                            ["Not",2],["Neg", 2],["Sub", 3],
                            ["Xor",3],["Or", 3],["And",3],
                            ["Mul",3],["Jiz",3],["Jnz",3],["Jl",3],
-                           ["Jle",3],["Jg",3],["Jge",3])):
+                           ["Jle",3],["Jg",3],["Jge",3],["Div", 3],["Mod", 3])):
     if nb==1:
         exec("""
 def {}(a):

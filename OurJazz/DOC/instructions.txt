@@ -31,6 +31,8 @@ op_codes :
 10110 : jle
 01110 : jg
 11110 : jge
+00001 : div
+10001 : mod
 
 
 To just jump, you can just move RIP (register 0)

@@ -236,6 +236,14 @@ int main() {
    // JGE gate
    gate_outputs.push_back(mux(rhs, incRip, lhs[word_size - 1]));
    
+   // Ces portes prennent 70% du processeur :(
+   pair<vector<string>, vector<string>> qr = div_bits(lhs, rhs);
+   // DIV gate
+   gate_outputs.push_back(qr.first);
+   
+   // MOD gate
+   gate_outputs.push_back(qr.second);
+   
    while(gate_outputs.size() < (1 << real_opcode_size)) {
       gate_outputs.push_back(vector<string>(word_size, "0"));
    }
