@@ -35,9 +35,10 @@ Mov(0, rdi)
 Main = Label()
 
 Mov(addr(keyboard), r8)
-Sub(r8, rbp, r14)
-Mov(r8, rbp)
-Jiz(r14, NormalRDI, rip)
+
+Sub(r8, 255, r14)
+Jiz(r14, Main, rip)
+Mov(255, addr(keyboard))
 
 Mov(rsi, rax)
 Mov(20, rbx)

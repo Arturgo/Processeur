@@ -36,9 +36,7 @@ int main(int argc, char* argv[]) {
          }
       }
       
-      for(size_t iFois = 0;iFois < 100;iFois++) {
-         tick();
-      }
+      tick();
       
       size_t curValue = get_ram(addr_update);
       if(derValue != curValue) {
