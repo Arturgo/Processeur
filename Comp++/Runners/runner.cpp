@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "proc.h"
 #include <iostream>
+#include <chrono>
 
 using namespace std;
 using namespace sf;
@@ -25,6 +26,8 @@ int main(int argc, char* argv[]) {
    size_t addr_begin = (1 << 23);
    size_t addr_update = addr_begin + SCREEN_X * SCREEN_Y;
    size_t addr_keyboard = addr_update + 1;
+   size_t addr_minutes = addr_update + 2;
+   size_t addr_milliseconds = addr_update + 3;
    
    while(window.isOpen()) {
       sf::Event event;
@@ -35,6 +38,11 @@ int main(int argc, char* argv[]) {
             set_ram(addr_keyboard, event.key.code);
          }
       }
+      
+      unsigned long long now = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+      
+      set_ram(addr_minutes, now / 60000);
+      set_ram(addr_milliseconds, now % 60000);
       
       tick();
       

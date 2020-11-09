@@ -6,6 +6,8 @@ screen_width = 64
 screen_height = 48
 screen_update = screen + screen_width * screen_height
 stack = screen - 1
+minutes = screen_update + 2
+millisecs = screen_update + 3
 
 digit_size = 40
 
@@ -27,14 +29,12 @@ Sub(rbx, rax, r8)
 Jnz(r8, Erase, rip)
 
 
-Mov(0, rsi)
-
 # Main loop 
 Main = Label()
 
 
 
-Mod(rsi, 60, rdi)
+Div(addr(millisecs), 1000, rdi)
 
 Mod(rdi, 10, rax)
 Mov(20, rbx)
@@ -58,8 +58,7 @@ RetAddr1 = Label()
 
 
 
-Div(rsi, 60, rdi)
-Mod(rdi, 60, rdi)
+Mod(addr(minutes), 60, rdi)
 
 Mod(rdi, 10, rax)
 Mov(20, rbx)
@@ -84,7 +83,7 @@ RetAddr3 = Label()
 
 
 
-Div(rsi, 3600, rdi)
+Div(addr(minutes), 60, rdi)
 Mod(rdi, 24, rdi)
 
 Mod(rdi, 10, rax)
@@ -110,8 +109,6 @@ RetAddr5 = Label()
 
 # Update screen
 Add(addr(screen_update), 1, addr(screen_update))
-
-Add(1, rsi, rsi)
 
 Jmp(Main)
 
