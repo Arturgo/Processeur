@@ -1,7 +1,7 @@
 # Processeur
 Projet de système numérique pour l'ENS, par Arthur Léonard et Étienne Rossignol.
 
-##Simulateur :
+## Simulateur :
 Pour utiliser le simulateur, il faut aller dans le dossier Comp++/, puis compiler :
 ```sh g++ -o main main.cpp -Wall -std=c++11 -O2 ```
 
@@ -17,7 +17,7 @@ Il va demander combien de ticks s'exécuter, ainsi que des chemins vers des fich
 
 
 
-##Processeur :
+## Processeur :
 Une première version du processeur est disponnible, avec une interface graphique.
 
 Pour le tester, commencez par installer la SFML :
@@ -39,7 +39,7 @@ L'assembleur du programme correspondant est le fichier
 
 
 
-##Assembleur :
+## Assembleur :
 Si vous voulez utiliser votre propre programme sur notre processeur, vous pouvez écrire votre assembleur dans un fichier .s dans /asm/Tests/.
 
 Pour le transformer en un fichier de données, exécutez :
