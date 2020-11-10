@@ -18,10 +18,14 @@ premierPasse=True
 def Bin(a):
         if a==0:
             return '0'
+        if a<0:
+            return Bin(2**32-1)
         return (bin(a)[2:])[::-1]
 
     
 def code(op_code,a,b,c):
+    L=[x.n for x in (a,b,c) if isinstance(x, addr)]
+    assert len(L)==0 or max(L)==min(L)
     global ligne
     while ligne%4:
         ligne+=1
@@ -115,6 +119,9 @@ def Data(donnee):
     if isinstance(donnee, str):
         donnee=ord(donnee)
     print("{:0<32}".format(Bin(donnee)))
+def Variable(donnee):
+    Data(donnee)
+    return addr(ligne-1)
 def Label():
     return ligne
 def Init():
