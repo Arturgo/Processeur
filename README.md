@@ -68,7 +68,7 @@ L'assembleur du programme correspondant est le fichier
 
 Vous devriez obtenir quelque chose qui ressemble à ça :
 
-()
+(https://raw.githubusercontent.com/Arturgo/Processeur/main/montre.png)
 
 ### Story time :
 
@@ -95,9 +95,9 @@ Ainsi, le processeur va être lancé avec votre programme dans sa RAM.
 Une fenêtre va s'ouvrir, qui est l'interface graphique du processeur.
 
 Actuellement, elle supporte :
--L'affichage de pixels en RGBA
--Une interface rudimentaire pour le clavier
--Une synchronisation avec le temps de l'ordinateur
+ * L'affichage de pixels en RGBA, avec synchronisation entre le processeur et l'affichage.
+ * Une interface rudimentaire pour le clavier.
+ * Une synchronisation avec le temps de l'ordinateur.
 
 ### Story time :
 
