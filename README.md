@@ -27,9 +27,9 @@ Il va demander combien de ticks s'exécuter, ainsi que des chemins vers des fich
 
 Le simulateur a été codé trois fois : une première fois en OCaml (SimuML) avec la structure donnée en exemple. Cependant, la structure ne permettait pas de faire de l'évaluation paresseuse.
 
-Une deuxième version (Simu++) a donc été codée en C++, qui était toujours un interpréteur de Netlist. Cette fois-ci, il pouvait faire de l'évaluation paresseuse et de la compression de chemin, ce qui était nécessaire au vu de la sortie du compilateur MiniJazz : il n'arrête pas de faire des CONCAT et des SPLIT qui peuvent être optimisés. On gagne comme ceci un facteur en temps de l'ordre de 50 par rapport à la version précédente.
+Une deuxième version (Simu++) a donc été codée en C++, qui était toujours un interpréteur de Netlist. Cette fois-ci, il pouvait faire de l'évaluation paresseuse et de la compression de chemin, ce qui était nécessaire au vu de la sortie du compilateur MiniJazz : il fait des CONCAT et des SPLIT qui peuvent être optimisés. On gagne ainsi un facteur en temps de l'ordre de 50 par rapport à la version précédente.
 
-Finalement, une troisième version (Comp++) a été codée, toujours en C++, puisque la précédente version disposait déjà du parser netlist (qui est la partie qui prend le plus de temps). Cette fois-ci, afin de gagner toujours plus de temps, Comp++ transpile le netlist en C++, et demande à GCC d'optimiser l'exécutable. Les optimisations précédentes, c'est à dire l'évaluation paresseuse et la compression de chemin, ont bien sûr été conservées. On gagne comme ceci un facteur en temps de l'ordre de 3 par rapport à la version précédente.
+Finalement, une troisième version (Comp++) a été codée, toujours en C++, puisque la précédente version disposait déjà du parser netlist (qui est la partie qui prend le plus de temps). Cette fois-ci, afin de gagner toujours plus de temps, Comp++ transpile le netlist en C++, et demande à GCC d'optimiser l'exécutable. Les optimisations précédentes, c'est à dire l'évaluation paresseuse et la compression de chemin, ont bien sûr été conservées. On gagne ainsi un facteur en temps de l'ordre de 3 par rapport à la version précédente.
 
 Vous ne disposez ici que de Comp++, qui est la version la plus aboutie et la plus efficace des trois.
 
