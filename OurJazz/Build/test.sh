@@ -8,4 +8,4 @@ g++ -o main main.cpp -Wall -std=c++11 -O2
 ./../../Comp++/main proc.net > proc.h
 cp ../../Comp++/Runners/runner.cpp runner.cpp
 
-g++ -o proc runner.cpp -Wall -std=c++11 -Ofast -lsfml-window -lsfml-graphics -lsfml-system -DOUTPUT -DINPUT
+g++ -o proc runner.cpp -Wall -std=c++11 -Ofast -lsfml-window -lsfml-graphics -lsfml-system -DOUTPUT -DINPUT -DRAM

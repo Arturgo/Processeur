@@ -411,7 +411,9 @@ public:
       }
       c += "}\n";
       
+      
       if(rams.size() == 1) {
+         c += "#ifdef RAM\n";
          string ram = rams.back();
          
          c += "size_t get_ram(size_t pos) {\n";
@@ -441,6 +443,8 @@ public:
          }
          
          c += "}\n";
+         
+         c += "#endif\n";
       }
       
       //Tick function
