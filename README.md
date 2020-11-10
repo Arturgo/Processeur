@@ -68,7 +68,7 @@ L'assembleur du programme correspondant est le fichier
 
 Vous devriez obtenir quelque chose qui ressemble à ça :
 
-(https://raw.githubusercontent.com/Arturgo/Processeur/main/montre.png)
+![Screenshot de la montre](https://raw.githubusercontent.com/Arturgo/Processeur/main/montre.png)
 
 ### Story time :
 
