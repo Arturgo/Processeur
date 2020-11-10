@@ -70,6 +70,14 @@ Vous devriez obtenir quelque chose qui ressemble à ça :
 
 ![Screenshot de la montre](https://raw.githubusercontent.com/Arturgo/Processeur/main/montre.png)
 
+Actuellement, le processeur supporte :
+ * L'affichage de pixels en RGBA, avec synchronisation entre le processeur et l'affichage.
+ * Une interface rudimentaire pour le clavier.
+ * Une synchronisation avec le temps de l'ordinateur.
+ * Les portes logiques suivantes : le déplacement, l'incrément, l'addition, le non logique, l'opposé arithmétique, la soustraction, le OU exclusif, le OU, le ET, la multiplication, la division, le modulo.
+ * Les instructions de contrôles : saute si nul, saute si non-nul, saut si négatif, saute si strictement négatif, saute si positif, saute si strictement positif, saut inconditionel
+ * L'architecture est basée sur 16 registres 32 bits, avec des instructions de 128 bits, et une RAM découpée en 4194304 mots de 128 bits.
+
 ### Story time :
 
 À venir au prochain rendu !
@@ -93,11 +101,6 @@ echo "../Tests/votre-fichier-assembleur.data" | ./proc
 
 Ainsi, le processeur va être lancé avec votre programme dans sa RAM.
 Une fenêtre va s'ouvrir, qui est l'interface graphique du processeur.
-
-Actuellement, elle supporte :
- * L'affichage de pixels en RGBA, avec synchronisation entre le processeur et l'affichage.
- * Une interface rudimentaire pour le clavier.
- * Une synchronisation avec le temps de l'ordinateur.
 
 ### Story time :
 
