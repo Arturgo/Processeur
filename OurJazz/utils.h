@@ -273,10 +273,10 @@ vector<string> mul_bits(vector<string> a, vector<string> b) {
 }
 
 pair<vector<string>, vector<string>> div_bits(vector<string> a, vector<string> b) {
-   vector<string> remainder = a;
+   vector<string> remainder = not_bits(a);
    
    for(size_t iBit = 0;iBit < a.size();iBit++) {
-      remainder.push_back("0");
+      remainder.push_back("1");
       b.push_back("0");
    }
    
@@ -285,17 +285,19 @@ pair<vector<string>, vector<string>> div_bits(vector<string> a, vector<string> b
    for(int iBit = (int)a.size() - 1;iBit >= 0;iBit--) {
       vector<string> dec = mul_p2_bits(b, iBit);
       
-      vector<string> diff = sub_bits(remainder, dec);
+      vector<string> diff = add_bits(remainder, dec);
       
-      string tooBig = diff.back();
+      string isLess = diff.back();
       
-      remainder = mux(diff, remainder, tooBig);
-      res.push_back(op_not(tooBig));
+      remainder = mux(remainder, diff, isLess);
+      res.push_back(isLess);
    }
    
    reverse(res.begin(), res.end());
    
    for(size_t iBit = 0;iBit < a.size();iBit++) remainder.pop_back();
+   
+   remainder = not_bits(remainder);
    
    return make_pair(res, remainder);
 }
