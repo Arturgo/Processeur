@@ -56,6 +56,8 @@ Puis aller dans OurJazz/Build, et exécuter test.sh :
 
 Cela peut prendre un certain temps, puisque GCC doit compiler plusieurs milliers de lignes en sortie du transpiler netlist.
 
+### Montre digitale :
+
 Vous pouvez maintenant exécuter le processeur sur le programme :
 ```shell
 echo "../Tests/div.data" | ./proc 
@@ -69,6 +71,8 @@ L'assembleur du programme correspondant est le fichier
 Vous devriez obtenir quelque chose qui ressemble à ça :
 
 ![Screenshot de la montre](https://raw.githubusercontent.com/Arturgo/Processeur/main/montre.png)
+
+### Snake :
 
 Vous pouvez aussi profiter d'un snake exceptionnel :
 ```shell
