@@ -33,6 +33,8 @@ Finalement, une troisième version (Comp++) a été codée, toujours en C++, pui
 
 Vous ne disposez ici que de Comp++, qui est la version la plus aboutie et la plus efficace des trois.
 
+Comme nous sommes toujours lents comparés à (par exemple) une gameboy, une éventuelle prochaine version utilisera le bit-parallelism.
+
 ## Processeur :
 
 ### Utilisation :
