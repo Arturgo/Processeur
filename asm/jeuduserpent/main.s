@@ -16,8 +16,8 @@ ecart=100
 digit_size = 40
 
 T=4
-nbLigne=12
-nbColonne=16
+nbLigne=screen_height//T
+nbColonne=screen_width//T
 
 # Move stack pointer
 Mov(stack, rsp)
@@ -356,6 +356,9 @@ Add(r10, screen, r10)
 Sub(black, addr(r10), r13)
 
 Jiz(r13, Fruit, rip)
+Sub(red, addr(r10), r13)
+Jiz(r13, Fruit, rip)
+
 
 boucleFruit=Label()
 Mul(screen_width, r8, r10)
