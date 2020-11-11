@@ -2,6 +2,9 @@
 #include "proc.h"
 #include <iostream>
 #include <chrono>
+#include <ctime>
+#include <cstdlib>
+#include <cstdio>
 
 using namespace std;
 using namespace sf;
@@ -29,6 +32,9 @@ int main(int argc, char* argv[]) {
    size_t addr_minutes = addr_update + 2;
    size_t addr_milliseconds = addr_update + 3;
    
+   size_t iTick = 0;
+   
+   size_t deb = clock();
    while(window.isOpen()) {
       sf::Event event;
       while(window.pollEvent(event)) {
@@ -45,6 +51,7 @@ int main(int argc, char* argv[]) {
       set_ram(addr_milliseconds, now % 60000);
       
       tick();
+      iTick++;
       
       size_t curValue = get_ram(addr_update);
       if(derValue != curValue) {
@@ -64,6 +71,10 @@ int main(int argc, char* argv[]) {
          derValue = curValue;
       }
    }
+   
+   size_t fin = clock();
+   
+   cerr << iTick << " ticks executed in " << (fin - deb) / (double)CLOCKS_PER_SEC << " seconds." << endl;
    
    return 0;
 }
