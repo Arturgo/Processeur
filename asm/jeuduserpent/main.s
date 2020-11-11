@@ -1,3 +1,4 @@
+nouvJeu=Label()
 white = (2 ** 32) - 1
 grey = 0b10111111101111111011111111111111
 red=   0b11111111000000000000000011111111
@@ -168,6 +169,15 @@ Fin=Label()
 Mov(255, addr(keyboard))
 
 
+#déplace la tete
+Add(posSerpentL, dL,posSerpentL)
+Add(posSerpentC, dC,posSerpentC)
+
+Add(posSerpentL, nbLigne,posSerpentL)
+Add(posSerpentC, nbColonne,posSerpentC)
+Mod(posSerpentC, nbColonne, posSerpentC)
+Mod(posSerpentL, nbLigne, posSerpentL)
+
 #detecte ce qu'il y a sur la tête
 Mul(posSerpentL, T,r8)
 Mul(posSerpentC, T,r9)
@@ -175,8 +185,11 @@ Mul(screen_width, r8, r10)
 Add(r10, r9, r10)
 Add(r10, screen, r10)
 Mov(addr(r10), r8)
+
+Sub(r8, black, r9)
 Sub(r8, red, r10)
-Jiz(r10, nouvfruit,rip)
+Jiz(r9, perdu, rip)
+Jiz(r10, nouvfruit, rip)
 
 #supprime la fin
 Mov(rip, rbx)
@@ -198,29 +211,9 @@ Jmp(nbAlea)
 
 Mov(rip, rbx)
 Jmp(Fruit)
+#Jmp(perdu)
 
 finFruit=Label()
-
-
-#déplace la tete
-Add(posSerpentL, dL,posSerpentL)
-Add(posSerpentC, dC,posSerpentC)
-
-Add(posSerpentL, nbLigne,posSerpentL)
-Add(posSerpentC, nbColonne,posSerpentC)
-Mod(posSerpentC, nbColonne, posSerpentC)
-Mod(posSerpentL, nbLigne, posSerpentL)
-
-#detecte ce qu'il y a sur la tête
-Mul(posSerpentL, T,r8)
-Mul(posSerpentC, T,r9)
-Mul(screen_width, r8, r10)
-Add(r10, r9, r10)
-Add(r10, screen, r10)
-Mov(addr(r10), r8)
-
-Sub(r8, black, r9)
-Jiz(r9, perdu, rip)
 
 #ajoute une nouvelle case
 Mov(posSerpentL, addr(debutSerpent))
@@ -262,7 +255,7 @@ Jnz(r8, EraseP, rip)
 Add(addr(screen_update), 1, addr(screen_update))
 Mov(rip, rbx)
 Jmp(nbAlea)
-Jmp(perdu)
+Jmp(nouvJeu)
 
 
 #Noir écrit la case posSerpentL,posSerpentC en noir
