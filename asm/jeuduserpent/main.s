@@ -52,6 +52,10 @@ fruitL=Variable(0)
 fruitC=Variable(0)
 saut=Label()
 
+Mov(0,dL)
+Mov(1,dC)
+
+
 Mov(millisecs, r8)
 Mov(r8, genAlea) 
 Mov(nbLigne//2,posSerpentL)
