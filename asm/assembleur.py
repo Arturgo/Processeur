@@ -1,7 +1,7 @@
 import sys
 
 r="from asm import *\n"
-sys.argv.append("Tests/test.s")
+sys.argv.append("jeuduserpent/main.s")
 with open(sys.argv[1]) as f:
     t=f.read()
 t+='\n'
