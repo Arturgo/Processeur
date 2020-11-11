@@ -263,8 +263,9 @@ Mov(rip, rdi)
 Jmp(WriteDigit)
 
 Add(addr(screen_update), 1, addr(screen_update))
-#Mov(rip, rdi)
-#Jmp(nbAlea)
+Mov(0, addr(keyboard))
+attente=Label()
+Jiz(addr(keyboard), attente, rip)
 
 Jmp(nouvJeu)
 
