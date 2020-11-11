@@ -11,9 +11,9 @@ Pour utiliser le simulateur, il faut aller dans le dossier Comp++/, puis compile
 g++ -o main main.cpp -Wall -std=c++11 -O2
 ```
 
-Ensuite, dans le dossier Comp++/Tests, pour compiler test.net exécutez (Ne pas faire attention à ce qui est affiché) :
+Ensuite, dans le dossier Comp++/Tests, pour compiler un fichier netlist exécutez (Ne pas faire attention à ce qui est affiché) :
 ```shell
-./compile.sh test.net
+./compile.sh chemin/vers/le/fichier/netlist.net
 ```
 
 Vous pouvez enfin lancer l'exécutable pour lancer le netlist :
@@ -21,7 +21,7 @@ Vous pouvez enfin lancer l'exécutable pour lancer le netlist :
 ./proc
 ```
 
-Il va demander combien de ticks s'exécuter, ainsi que des chemins vers des fichiers pour initialiser les rams. Mettre un fichier vide remplira la ram avec des zéros.
+Il va demander combien de ticks s'exécuter, ainsi que des chemins vers des fichiers pour initialiser les rams. Mettre un fichier vide remplira la ram avec des zéros. Un tel fichier doit contenir une succession des caractères "0" et "1".
 
 ### Story time :
 
