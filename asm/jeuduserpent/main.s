@@ -25,13 +25,13 @@ Mov(stack, rsp)
 # Init everything in white
 
 Mov(screen, rax)
-Add(screen, screen_width * screen_height, rbx)
+Add(screen, screen_width * screen_height, rdi)
 
 Erase=Label()
 Mov(white, addr(rax))
 Add(rax, 1, rax)
 
-Sub(rbx, rax, r8)
+Sub(rdi, rax, r8)
 
 Jnz(r8, Erase, rip)
 
@@ -40,7 +40,7 @@ Jnz(r8, Erase, rip)
 
 debutSerpent=rsp
 finSerpent=rax
-posSerpentL=rcx
+posSerpentL=rbp
 posSerpentC=rdx
 
 Jmp(saut)
@@ -50,11 +50,12 @@ genAlea=Variable(0)
 dernierTemps=Variable(0)
 fruitL=Variable(0)
 fruitC=Variable(0)
+score=Variable(0)
 saut=Label()
 
 Mov(0,dL)
 Mov(1,dC)
-
+Mov(0,score)
 
 Mov(millisecs, r8)
 Mov(r8, genAlea) 
@@ -65,7 +66,7 @@ Sub(debutSerpent, 1, debutSerpent)
 Mov(posSerpentC, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
 Mov(debutSerpent, finSerpent)
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 
 
@@ -74,7 +75,7 @@ Mov(posSerpentL, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
 Mov(posSerpentC, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 
 Add(posSerpentC, 1, posSerpentC)
@@ -82,7 +83,7 @@ Mov(posSerpentL, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
 Mov(posSerpentC, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 
 Add(posSerpentC, 1, posSerpentC)
@@ -90,44 +91,34 @@ Mov(posSerpentL, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
 Mov(posSerpentC, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 Add(posSerpentC, 1, posSerpentC)
 Mov(posSerpentL, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
 Mov(posSerpentC, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 Add(posSerpentC, 1, posSerpentC)
 Mov(posSerpentL, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
 Mov(posSerpentC, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 Add(posSerpentC, 1, posSerpentC)
 Mov(posSerpentL, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
 Mov(posSerpentC, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 
-Mod(genAlea, nbLigne, r8)
-Mov(r8, fruitL)
-Mov(rip, rbx)
-Jmp(nbAlea)
-
-Mod(genAlea, nbColonne, r8)
-Mov(r8, fruitC)
-Mov(rip, rbx)
-Jmp(nbAlea)
-
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Fruit)
 
 
@@ -190,41 +181,41 @@ Add(r10, r9, r10)
 Add(r10, screen, r10)
 Mov(addr(r10), r8)
 
-Sub(r8, black, r9)
 Sub(r8, red, r10)
-Jiz(r9, perdu, rip)
 Jiz(r10, nouvfruit, rip)
 
 #supprime la fin
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(SupprimerFin)
 Jmp(finFruit)
 
 
 nouvfruit=Label()
 
-Mod(genAlea, nbLigne, r8)
-Mov(r8, fruitL)
-Mov(rip, rbx)
-Jmp(nbAlea)
-
-Mod(genAlea, nbColonne, r8)
-Mov(r8, fruitC)
-Mov(rip, rbx)
-Jmp(nbAlea)
-
-Mov(rip, rbx)
+Add(score, 1,score)
+Mov(rip, rdi)
 Jmp(Fruit)
 #Jmp(perdu)
 
 finFruit=Label()
+
+#perdu ?
+Mul(posSerpentL, T,r8)
+Mul(posSerpentC, T,r9)
+Mul(screen_width, r8, r10)
+Add(r10, r9, r10)
+Add(r10, screen, r10)
+Mov(addr(r10), r8)
+
+Sub(r8, black, r9)
+Jiz(r9, perdu, rip)
 
 #ajoute une nouvelle case
 Mov(posSerpentL, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
 Mov(posSerpentC, addr(debutSerpent))
 Sub(debutSerpent, 1, debutSerpent)
-Mov(rip, rbx)
+Mov(rip, rdi)
 Jmp(Noir)
 
 #gere le temps de rafrachissement
@@ -245,20 +236,36 @@ Jmp(Main)
 
 #
 perdu=Label()
-Mov(genAlea, r9)
+#Mov(genAlea, r9)
 Mov(screen, rax)
-Add(screen, screen_width * screen_height, rbx)
+Add(screen, screen_width * screen_height, rdi)
 
 EraseP=Label()
-Mov(r9, addr(rax))
+Mov(white, addr(rax))
 Add(rax, 1, rax)
 
-Sub(rbx, rax, r8)
+Sub(rdi, rax, r8)
 
 Jnz(r8, EraseP, rip)
+
+Mod(score, 10, r14)
+Sub(score, r14,score)
+Div(score, 10, score)
+Mov(20,rcx)
+Mov(34, rbp)
+Mov(rip, rdi)
+Jmp(WriteDigit)
+
+Mod(score, 10, r14)
+Mov(20,rcx)
+Mov(28, rbp)
+Mov(rip, rdi)
+Jmp(WriteDigit)
+
 Add(addr(screen_update), 1, addr(screen_update))
-Mov(rip, rbx)
-Jmp(nbAlea)
+#Mov(rip, rdi)
+#Jmp(nbAlea)
+
 Jmp(nouvJeu)
 
 
@@ -285,7 +292,7 @@ Add(r9, 1,r9)
 Mul(posSerpentL, T,r8)
 Sub(r9,r12,r10)
 Jnz(r10, boucleNoir, rip)
-Add(rbx,8,rip)
+Add(rdi,8,rip)
 
 SupprimerFin=Label()
 posSerpentL=r13
@@ -316,16 +323,26 @@ Add(r9, 1,r9)
 Mul(posSerpentL, T,r8)
 Sub(r9,r12,r10)
 Jnz(r10, boucleSupr, rip)
-Add(rbx,8,rip)
+Add(rdi,8,rip)
 
 
 nbAlea=Label()
 Mul(genAlea, 578987987,genAlea)
 Add(genAlea, 645321231,genAlea)
-Add(rbx,8,rip)
+Add(rsi,8,rip)
 
 
 Fruit=Label()
+
+Mod(genAlea, nbLigne, r8)
+Mov(r8, fruitL)
+Mov(rip, rsi)
+Jmp(nbAlea)
+
+Mod(genAlea, nbColonne, r8)
+Mov(r8, fruitC)
+Mov(rip, rsi)
+Jmp(nbAlea)
 
 Mul(fruitL, T,r8)
 Mul(fruitC, T,r9)
@@ -333,6 +350,12 @@ Add(fruitL, 1,r11)
 Mul(r11, T,r11)
 Add(fruitC, 1,r12)
 Mul(r12, T,r12)
+Mul(screen_width, r8, r10)
+Add(r10, r9, r10)
+Add(r10, screen, r10)
+Sub(black, addr(r10), r13)
+
+Jiz(r13, Fruit, rip)
 
 boucleFruit=Label()
 Mul(screen_width, r8, r10)
@@ -347,5 +370,59 @@ Add(r9, 1,r9)
 Mul(fruitL, T,r8)
 Sub(r9,r12,r10)
 Jnz(r10, boucleFruit, rip)
-Add(rbx,8,rip)
+Add(rdi,8,rip)
 
+
+
+# Write a digit on screen
+# Parameters :
+# Digit value in r14
+# Row in rcx
+# Col in rbp
+WriteDigit = Label()
+
+# Compute where to stop
+Add(rcx, 8, r10)
+Add(rbp, 5, r11)
+Mov(rbp, r9)
+
+# Compute addr of digit
+Mul(r14, digit_size, r14)
+Add(Digits, r14, r14)
+
+# Loop to print
+Boucle = Label()
+
+# Compute addr to print
+Mul(rcx, screen_width, r8)
+Add(r8, screen, r8)
+Add(r8, r9, r8)
+
+Mov(addr(r14), rdx)
+Mov(rdx, addr(r8))
+
+#Inc col
+Add(r9, 1, r9)
+Add(r14, 1, r14)
+
+#Col comparison
+Sub(r9, r11, r13)
+Jnz(r13, Normal, rip)
+Mov(rbp, r9)
+Add(rcx, 1, rcx)
+Normal = Label()
+
+#Row comparison
+Sub(rcx, r10, r12)
+Jnz(r12, Boucle, rip)
+
+#ret
+Add(rdi,8,rip)
+
+
+
+#Data for digits
+
+Digits = Label()
+
+import Tests/chiffre.data
