@@ -70,6 +70,20 @@ Vous devriez obtenir quelque chose qui ressemble à ça :
 
 ![Screenshot de la montre](https://raw.githubusercontent.com/Arturgo/Processeur/main/montre.png)
 
+Vous pouvez aussi profiter d'un snake exceptionnel :
+```shell
+echo "../Tests/snake.data" | ./proc 
+```
+
+L'assembleur du programme correspondant est dans le dossier :
+```shell 
+/asm/jeuduserpent
+```
+
+Vous devriez obtenir quelque chose qui ressemble à ça :
+
+![Screenshot de la montre](https://raw.githubusercontent.com/Arturgo/Processeur/main/snake.png)
+
 Actuellement, le processeur supporte :
  * L'affichage de pixels en RGBA, avec synchronisation entre le processeur et l'affichage.
  * Une interface rudimentaire pour le clavier.
