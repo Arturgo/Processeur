@@ -1,7 +1,14 @@
 nouvJeu=Label()
 white = (2 ** 32) - 1
 grey = 0b10111111101111111011111111111111
-red=   0b11111111000000000000000011111111
+green0=   0b01001101101001010111000111111100
+green1=   0b01001101100101010111000111111100
+red0=     0b10110100001000110011000011111100
+red1=     0b11000100001000110011000011111100
+red2=     0b10100100001000110011000011111100
+red3=     0b10010100001000110011000011111100
+red4=     0b11000001010101010101110011111100
+white0=   0b11111111111111111111111111111100
 black = 0
 screen = (2 ** 23)
 screen_width = 64
@@ -181,7 +188,7 @@ Add(r10, r9, r10)
 Add(r10, screen, r10)
 Mov(addr(r10), r8)
 
-Sub(r8, red, r10)
+Sub(r8, white0, r10)
 Jiz(r10, nouvfruit, rip)
 
 #supprime la fin
@@ -357,23 +364,50 @@ Add(r10, screen, r10)
 Sub(black, addr(r10), r13)
 
 Jiz(r13, Fruit, rip)
-Sub(red, addr(r10), r13)
+Sub(white0, addr(r10), r13)
 Jiz(r13, Fruit, rip)
 
 
-boucleFruit=Label()
 Mul(screen_width, r8, r10)
 Add(r10, r9, r10)
 Add(r10, screen, r10)
-Mov(red, addr(r10))
 
-Add(r8,1,r8)
-Sub(r8,r11,r10)
-Jnz(r10, boucleFruit, rip)
-Add(r9, 1,r9)
-Mul(fruitL, T,r8)
-Sub(r9,r12,r10)
-Jnz(r10, boucleFruit, rip)
+# Sprite of the apple
+Mov(white0, addr(r10))
+Add(r10, 1, r10)
+Mov(green0, addr(r10))
+Add(r10, 1, r10)
+Mov(green1, addr(r10))
+Add(r10, 1, r10)
+Mov(white0, addr(r10))
+Add(r10, screen_width - 3, r10)
+
+Mov(red0, addr(r10))
+Add(r10, 1, r10)
+Mov(red1, addr(r10))
+Add(r10, 1, r10)
+Mov(red0, addr(r10))
+Add(r10, 1, r10)
+Mov(red2, addr(r10))
+Add(r10, screen_width - 3, r10)
+
+Mov(red1, addr(r10))
+Add(r10, 1, r10)
+Mov(red0, addr(r10))
+Add(r10, 1, r10)
+Mov(red2, addr(r10))
+Add(r10, 1, r10)
+Mov(red3, addr(r10))
+Add(r10, screen_width - 3, r10)
+
+Mov(red0, addr(r10))
+Add(r10, 1, r10)
+Mov(red1, addr(r10))
+Add(r10, 1, r10)
+Mov(red4, addr(r10))
+Add(r10, 1, r10)
+Mov(red2, addr(r10))
+
 Add(rdi,8,rip)
 
 
