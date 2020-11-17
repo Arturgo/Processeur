@@ -1,0 +1,84 @@
+white = (2 ** 32) - 1
+grey = 0b10111111101111111011111111111111
+black = 0
+screen = (2 ** 23)
+screen_width = 64
+screen_height = 48
+screen_update = screen + screen_width * screen_height
+
+
+Mov(screen, rax)
+Add(screen, screen_width * screen_height, rdi)
+
+Mov(0,r9)
+
+Erase=Label()
+Mov(white, addr(rax))
+Add(rax, 1, rax)
+
+debut=Label()
+Attente=Label()
+Mov(-1000, r8)
+
+Jiz(r8, Attente, rip)
+
+Incr(r9)
+Mov(r9,r14)
+
+Mov(rip,rdi)
+Jmp(WriteDigit)
+Jmp(debut)
+
+
+# Write a digit on screen
+# Parameters :
+# Digit value in r14
+# Row in rcx
+# Col in rbp
+WriteDigit = Label()
+
+# Compute where to stop
+Add(rcx, 8, r10)
+Add(rbp, 5, r11)
+Mov(rbp, r9)
+
+# Compute addr of digit
+Mul(r14, digit_size, r14)
+Add(Digits, r14, r14)
+
+# Loop to print
+Boucle = Label()
+
+# Compute addr to print
+Mul(rcx, screen_width, r8)
+Add(r8, screen, r8)
+Add(r8, r9, r8)
+
+Mov(addr(r14), rdx)
+Mov(rdx, addr(r8))
+
+#Inc col
+Add(r9, 1, r9)
+Add(r14, 1, r14)
+
+#Col comparison
+Sub(r9, r11, r13)
+Jnz(r13, Normal, rip)
+Mov(rbp, r9)
+Add(rcx, 1, rcx)
+Normal = Label()
+
+#Row comparison
+Sub(rcx, r10, r12)
+Jnz(r12, Boucle, rip)
+
+#ret
+Add(rdi,8,rip)
+
+
+
+#Data for digits
+
+Digits = Label()
+
+import Library/chiffre.s

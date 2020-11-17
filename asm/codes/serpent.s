@@ -365,6 +365,7 @@ Add(rdi,8,rip)
 nbAlea=Label()
 Mul(genAlea, 578987987,genAlea)
 Add(genAlea, 645321231,genAlea)
+Mod(genAlea,   1000001,genAlea)
 Add(rsi,8,rip)
 
 
