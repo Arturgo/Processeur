@@ -90,6 +90,8 @@ Vous devriez obtenir quelque chose qui ressemble à ça :
 
 ![Screenshot de la montre](https://raw.githubusercontent.com/Arturgo/Processeur/main/snake.png)
 
+### L'architecture du processeur
+
 Actuellement, le processeur supporte :
  * L'affichage de pixels en RGBA, avec synchronisation entre le processeur et l'affichage.
  * Une interface rudimentaire pour le clavier.
@@ -123,4 +125,4 @@ Ainsi, le processeur va être lancé avec votre programme dans sa RAM.
 Une fenêtre va s'ouvrir, qui est l'interface graphique du processeur.
 
 ### Story time :
-Pour programmer l'assembleur, nous avons voulu faire un langage basé sur du python de façon à ne pas avoir à faire d'analyse syntaxique et lexicale. Nous avons créé deux programmes python : assembleur.py qui prend le programme, le modifie un peu, en particulier en ajoutant la bibliothèque de fonctions puis l'exécute. Nous avons en parallèle programmé la bibliothèque asm.py. Le plus difficile a été de coder la fonction code qui prend en entrée les différentes informations sur une instruction puis l'affiche. Le but était de faire la fonction la plus générale possible pour rendre la suite plus simple. Ainsi, on peut lui donner des registres ou des adresses de la même manière. Les fonctions du langage ont ensuite pu être ajoutées de façon générique sans avoir à faire une ligne de code pour chacune. Nous avons ensuite gérer les labels, cela paraissait assez simple. La difficulté était qu'ils peuvent être appelés avant d'être définis. Nous avons donc exécuter le code plusieurs fois en le dupliquant pour que cela fonctionne. Nous avons finalement ajouter la possibilité de créer des variables globales et importer un code extérieur sans difficulté.
+Pour programmer l'assembleur, nous avons voulu faire un langage basé sur du python de façon à ne pas avoir à faire d'analyse syntaxique et lexicale. Nous avons créé deux programmes python : assembleur.py qui prend le programme, le modifie un peu, en particulier en ajoutant la bibliothèque de fonctions puis l'exécute. Nous avons en parallèle programmé la bibliothèque asm.py. Le plus difficile a été de coder la fonction code qui prend en entrée les différentes informations sur une instruction puis l'affiche. Le but était de faire la fonction la plus générale possible pour rendre la suite plus simple. Ainsi, on peut lui donner des registres ou des adresses de la même manière. Les fonctions du langage ont ensuite pu être ajoutées de façon générique sans avoir à faire une ligne de code pour chacune. Nous avons ensuite gérer les labels, cela paraissait assez simple. La difficulté était qu'ils peuvent être appelés avant d'être définis. Nous avons donc exécuté le code plusieurs fois en le dupliquant pour que cela fonctionne. Nous avons finalement ajouté la possibilité de créer des variables globales et importer un code extérieur sans difficulté.
