@@ -205,9 +205,11 @@ public:
 class Mem : public Node {
 public:
    size_t adsz;
+   string name;
    
-   Mem(size_t _id, size_t _addr_size) : Node(_id) {
+   Mem(size_t _id, size_t _addr_size, string _name) : Node(_id) {
       adsz = _addr_size;
+      name = _name;
    }
    
    string vars() {
@@ -222,11 +224,15 @@ public:
       string c = "inline bool " + f(id) + " {\n"
       + "if(" + der(id) + " == curTick) return " + val(id) + ";\n"
       + der(id) + " = curTick;\n"
+      + "if(tick_"+ name + " != curTick) {"
       + "size_t pos = 0;\n";
       for(size_t i = 0;i < adsz;i++) {
          c += "if(" + parents[i]->call() + ") pos |= " + to_string(1 << i) + ";\n";
       }
-      c += "return " + val(id) + " = " + mem(id) + "[pos];\n"
+      c += "addr_" + name + " = pos;\n"
+      + "tick_" + name + " = curTick;\n"
+      + "}"
+      + "return " + val(id) + " = " + mem(id) + "[addr_" + name + "];\n"
       + "}\n";
       return c;
    }
@@ -376,6 +382,12 @@ public:
          if(node_list[node]->opt()->id == node) {
             c += node_list[node]->vars();
          }
+      }
+      
+      //Ram caches
+      for(string ram : rams) {
+         c += "size_t addr_" + ram + " = 0;\n";
+         c += "size_t tick_" + ram + " = 0;\n";
       }
       
       c += "size_t curTick = 0;\n\n";

@@ -235,7 +235,7 @@ Env* parse_netlist(char* file) {
       }
       else if (func == "RAM" || func == "ROM") {
          for(size_t i = 0;i < stoull(args[1]);i++) {
-            env->set_node(var, i, new Mem(env->get_node(var, i), stoull(args[0])));
+            env->set_node(var, i, new Mem(env->get_node(var, i), stoull(args[0]), var));
          }
          if(func == "RAM")
             env->create_ram(var);
