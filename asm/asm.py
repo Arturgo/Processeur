@@ -131,3 +131,9 @@ def Ecrire():
     global premierPasse
     premierPasse=False
     Init()
+def Import(fichier):
+    global ligne
+    with open(fichier) as f:
+        t=f.read()
+        print(t)
+        ligne+=(t.count('0')+t.count('1'))//32
