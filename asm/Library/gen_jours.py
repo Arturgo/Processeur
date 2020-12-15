@@ -6,11 +6,11 @@ def Bin(a):
 nbJours = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 for year in range(0, 400):
-	for month in range(0, 11):
+	for month in range(0, 12):
 		nJours = nbJours[month]
 		
 		if month == 1:
-			if year != 0 and year % 100 != 0 and year % 4 == 0:
+			if year == 0 or (year % 100 != 0 and year % 4 == 0):
 				nJours += 1
 		
 		for day in range(0, nJours):
