@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
    size_t addr_keyboard = addr_update + 1;
    size_t addr_minutes = addr_update + 2;
    size_t addr_milliseconds = addr_update + 3;
+   size_t addr_switch = addr_update + 4;
    
    size_t iTick = 0;
    
@@ -49,6 +50,7 @@ int main(int argc, char* argv[]) {
       
       set_ram(addr_minutes, now / 60000);
       set_ram(addr_milliseconds, now % 60000);
+      set_ram(addr_switch, (now / 1000) % 2);
       
       tick();
       iTick++;
