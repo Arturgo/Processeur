@@ -78,8 +78,8 @@ CheckMins = Label()
 
 Jnz(addr(fst), SuiteMins, rip)
 Jnz(rdi, Update, rip)
-SuiteMins = Label()
 Mov(0, addr(millisecs))
+SuiteMins = Label()
 
 Add(addr(minutes), 1, rdi)
 Mov(rdi, addr(minutes))
