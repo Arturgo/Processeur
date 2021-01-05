@@ -6,11 +6,24 @@ screen_width = 64
 screen_height = 48
 screen_update = screen + screen_width * screen_height
 stack = screen - 1
-minutes = screen_update + 2
-millisecs = screen_update + 3
+minutes_illegal = screen_update + 2
+millisecs_illegal = screen_update + 3
+switch = screen_update + 4
+
+minutes = screen - 42
+millisecs = screen - 43
+fst = screen - 44
+lastSwitch = screen - 45
 
 digit_size = 40
 letter_size = 36
+
+Mov(1, addr(fst))
+
+Mov(addr(minutes_illegal), rax)
+Sub(rax, 1, addr(minutes))
+
+Mov(rax, addr(millisecs))
 
 # Move stack pointer
 Mov(stack, rsp)
@@ -29,11 +42,11 @@ Sub(rbx, rax, r8)
 
 Jnz(r8, Erase, rip)
 
-
 # Main loop 
 Main = Label()
 
-
+Add(addr(millisecs), 1000, rdi)
+Mod(rdi, 60000, addr(millisecs))
 
 Div(addr(millisecs), 1000, rdi)
 
@@ -47,6 +60,11 @@ Sub(rsp, 1, rsp)
 Jmp(WriteDigit)
 RetAddr0 = Label()
 
+Mod(rdi, 10, rax)
+Jnz(addr(fst), SuiteDiz, rip)
+Jnz(rax, CheckMins, rip)
+SuiteDiz = Label()
+
 Div(rdi, 10, rax)
 Mov(27, rbx)
 Mov(32 + 10, rcx)
@@ -57,7 +75,15 @@ Sub(rsp, 1, rsp)
 Jmp(WriteDigit)
 RetAddr1 = Label()
 
+CheckMins = Label()
 
+Jnz(addr(fst), SuiteMins, rip)
+Jnz(rdi, Update, rip)
+SuiteMins = Label()
+Mov(0, addr(millisecs))
+
+Add(addr(minutes), 1, rdi)
+Mov(rdi, addr(minutes))
 
 Mod(addr(minutes), 60, rdi)
 
@@ -81,8 +107,9 @@ Sub(rsp, 1, rsp)
 Jmp(WriteDigit)
 RetAddr3 = Label()
 
-
-
+Jnz(addr(fst), SuiteFin, rip)
+Jnz(rdi, Update, rip)
+SuiteFin = Label()
 
 Div(addr(minutes), 60, rdi)
 Mod(rdi, 24, rdi)
@@ -212,9 +239,18 @@ Sub(rsp, 1, rsp)
 Jmp(WriteDigit)
 RetAddr10 = Label()
 
+Update = Label()
 
 # Update screen
 Add(addr(screen_update), 1, addr(screen_update))
+Mov(0, addr(fst))
+
+Attente = Label()
+Mov(addr(switch), rax)
+Sub(rax, addr(lastSwitch), rbx)
+Jiz(rbx, Attente, rip)
+
+Mov(rax, addr(lastSwitch))
 
 Jmp(Main)
 
