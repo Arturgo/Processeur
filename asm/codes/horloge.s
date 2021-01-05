@@ -23,6 +23,7 @@ Mov(1, addr(fst))
 Mov(addr(minutes_illegal), rax)
 Sub(rax, 1, addr(minutes))
 
+Mov(addr(millisecs_illegal), rax)
 Mov(rax, addr(millisecs))
 
 # Move stack pointer
