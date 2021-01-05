@@ -62,7 +62,7 @@ Cela peut prendre un certain temps, puisque GCC doit compiler plusieurs milliers
 
 Vous pouvez maintenant exécuter le processeur sur le programme :
 ```shell
-echo "../Tests/div.data" | ./proc 
+echo "../Tests/horloge.data" | ./proc 
 ```
 
 L'assembleur du programme correspondant est le fichier 
@@ -73,6 +73,11 @@ L'assembleur du programme correspondant est le fichier
 Vous devriez obtenir quelque chose qui ressemble à ça :
 
 ![Screenshot de la montre](https://raw.githubusercontent.com/Arturgo/Processeur/main/montre.png)
+
+Pour le fast-forward, utilisez à la place :
+```shell
+echo "../Tests/fast_forward.data" | ./proc 
+```
 
 ### Snake :
 
