@@ -104,6 +104,8 @@ Actuellement, le processeur supporte :
 
 Nous avons commencé par faire du miniJazz mais nous avons finalement trouvé plus pratique de coder notre propre bibliothèque en c++.
 
+Au début, on voulait faire un système de cache pour ne pas avoir à passer la moitié des tics à lire une instruction mais nous avons renoncé car il n'y avait pas la possibilité de reload le cache en un tic.
+
 Nous avons fait le choix d'utiliser le registre rip qui donne la ligne en cours comme étant un registre presque quelconque.
 Ainsi, faire des sauts nécessite des instructions spécifiques mais qui respectent la même structure que les autres instructions.
 
