@@ -67,7 +67,7 @@ echo "../Tests/horloge.data" | ./proc
 
 L'assembleur du programme correspondant est le fichier 
 ```shell 
-/asm/Tests/div.s
+/asm/Tests/horloge.s
 ```
 
 Vous devriez obtenir quelque chose qui ressemble à ça :
